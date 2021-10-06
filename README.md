@@ -69,6 +69,8 @@ At least Python 3.6 installed.
 ## Database Architecture 
 ![Database Architecture](./assets/relation.png)
 
+---
+
 ## Endpoints for watchmate_v2
 
 The Endpoints documentation is published in [postman](https://documenter.getpostman.com/view/7163762/UUy66k4d) and can be accessed publicly.
