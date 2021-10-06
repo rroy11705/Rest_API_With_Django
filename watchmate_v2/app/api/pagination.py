@@ -1,0 +1,22 @@
+from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination, CursorPagination
+
+
+class WatchListPagination(PageNumberPagination):
+    page_size = 50
+    page_query_param = 'p'
+    page_size_query_param = 'size'
+    max_page_size = 50
+    last_page_strings = ('end',)
+
+
+class WatchListLOPagination(LimitOffsetPagination):
+    default_limit = 10
+    max_limit = 50
+    limit_query_param = 'limit'
+    offset_query_param = 'start'
+
+
+class WatchListCPagination(CursorPagination):     # cannot go to specific page, have to use next and prev. use: agreement
+    page_size = 5
+    ordering = 'created'
+    cursor_query_param = 'record'

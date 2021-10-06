@@ -1,5 +1,5 @@
 # from .views import movie_details, movie_list
-from .views import WatchListAV, WatchListDetailAV, StreamPlatformAV, StreamPlatformDetailAV, ReviewList, ReviewDetails, ReviewCreate
+from .views import WatchListAV, WatchListDetailAV, StreamPlatformAV, StreamPlatformDetailAV, ReviewList, ReviewDetails, ReviewCreate, UserReview
 from django.urls import path, include
 
 urlpatterns = [
@@ -13,4 +13,6 @@ urlpatterns = [
     path('review/<int:pk>/', ReviewDetails.as_view(), name='review-detail'),
 
     path('list/<int:pk>/review-create/', ReviewCreate.as_view(), name='review-create'),
+
+    path('reviews/<str:username>/', UserReview.as_view(), name='user-review-detail'),
 ]
