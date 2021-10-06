@@ -7,19 +7,57 @@ The purpose of the API is to let the users discover TV shows and movies and its 
 
 The watchmate_v1 is not a Restful api. This is just for learning normal Django.
 The watchmate_v2 is a Restful api using Django which contains various practices of REST_FRAMEWORK.
+The watchmate_v2.0.1 is an optimized and clean version of watchmate_v2
 
-#### Types of Views used:
-1. Class Based View (APIView class)
-- Generic View
+#### Concepts Learned:
+
+1. API Basics
+
+2. Serializers
+- Serializers
+- ModelSerializer
+- HyperlinkedModelSerializer
+
+3. Function-Based
+
+4. Class-Based Views
+- APIView
+- Generic Views
 - Mixins
-- Concrete View
-- ViewSets
+- Concrete View Classes
 
-2. Function Based Views (api_view decorator)
+5. Viewsets and Routers
 
-#### Types of Serializer used:
-1. serializers.Serializer
-2. serializers.ModelSerializer
+6. Permissions
+- IsAuthenticated
+- IsAdminUser
+- IsAuthenticatedOrReadOnly
+- Custom Permission
+
+7. Authentications
+- BasicAuthentication
+- TokenAuthentication
+- JSON Web Token Authentication
+
+8. Throttling
+- AnonRateThrottle
+- UserRateThrottle
+- ScopedRateThrottle
+- Custom Throttles
+
+9. Django Filter Backend
+- Filtering
+- Searching
+- Ordering
+
+10. Pagination
+- Page Number
+- Limit Offset
+- Cursor
+
+11. Automated API Testing
+
+12. Clean Coding Practice
 
 
 **Django** is a high-level Python web framework that encourages rapid development and clean, pragmatic design. Built by experienced developers, it takes care of much of the hassle of web development, so you can focus on writing your app without needing to reinvent the wheel. It’s free and open source.
@@ -75,6 +113,17 @@ At least Python 3.6 installed.
 
 The Endpoints documentation is published in [postman](https://documenter.getpostman.com/view/7163762/UUy66k4d) and can be accessed publicly.
 
+
+---
+
+## Testing
+
+The command for testing is:
+
+> python manage.py test
+
+on successful test it will show the following:
+![Testing Result](./assets/test-case.PNG)
 
 ---
 
