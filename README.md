@@ -66,20 +66,41 @@ At least Python 3.6 installed.
 
 ## Endpoints for watchmate_v2
 
-#### 1. /api/create-user \[method=GET\]
-To create a user using POST method.
+#### 1. /watch/list \[allowed methods = GET, POST\]
+The GET method is to fetch all list of all TV shows and Movies available.
+The POST method id to add a single watchable TV show or Movie to the database.
 
 
-#### 2. /auth/login \[method=POST\]
-To log in using an existing email address and returns a Bearer token.
+#### 2. /watch/list/show_id(integer)/ \[allowed methods  = GET, PUT, DELETE\]
+The GET method is to fetch the data of the TV shows or Movies with a show_id, which is of type integer.
+The PUP method is to update the data of the TV shows or Movies with a show_id.
+The DELETE method is to delete the TV shows or Movies record with a show_id.
 
 
-#### 3. /auth/signup \[method=POST\]
-To create a new user and store the user details to database.
+#### 3. /watch/stream/ \[allowed methods = GET, POST\]
+The GET method is to fetch all list of Streaming Platforms available.
+The POST method id to add a single Streaming Platform to the database.
 
 
-#### 3. /auth/reset_password \[method=PUT\]
-To reset a password using an existing email address and existing password.
+#### 4. /watch/stream/stream_id(integer)/ \[allowed methods  = GET, PUT, DELETE\]
+The GET method is to fetch the data of the Streaming Platform with id = stream_id, which is of type integer.
+The PUP method is to update the data of the Streaming Platform with id = stream_id.
+The DELETE method is to delete the Streaming Platform record with id = stream_id.
+
+
+#### 5. /watch/list/show_id/reviews/ \[allowed methods = GET\]
+The GET method is to fetch all reviews of the TV shows or Movie with id = show_id.
+
+
+#### 6. /watch/review/review_id/ \[allowed methods = GET, PUT, PATCH, DELETE\]
+The GET method is to fetch the review with id = review_id.
+The PUT method is to update the entire review with id = review_id.
+The PATCH method is to update the review partially with id = review_id.
+The DELETE method is to delete the review with id = review_id.
+
+
+#### 7. list/show_id/review-create/ \[allowed methods = POST\]
+The POST method is to create a review for the TV shows or Movie with id = show_id.
 
 
 ---
