@@ -1,13 +1,18 @@
-from app.models import WatchList, StreamPlatform, Review
 from rest_framework import status, mixins, generics
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
 # from rest_framework.decorators import api_view
+
+from app.models import WatchList, StreamPlatform, Review
+from .permissions import IsAdminOrReadOnly, IsReviewUserOrReadOnly
 from .serializers import WatchListSerializer, StreamPlatformSerializer, ReviewSerializer
 
 
 class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Review.objects.all()
@@ -16,7 +21,23 @@ class ReviewCreate(generics.CreateAPIView):
         pk = self.kwargs.get('pk')
         watchlist = WatchList.objects.get(pk=pk)
 
-        serializer.save(watchlist=watchlist)
+        reviewer = self.request.user
+        print(reviewer)
+        review_queryset = Review.objects.filter(watchlist=watchlist, reviewer=reviewer)
+
+        if review_queryset.exists():
+            raise ValidationError("You have already reviewed the movie!")
+
+        if watchlist.number_rating == 0:
+            watchlist.avg_rating = serializer.validated_data['rating']
+        else:
+            watchlist.avg_rating = (
+                watchlist.avg_rating + serializer.validated_data['rating'])/2
+
+        watchlist.number_rating = watchlist.number_rating + 1
+        watchlist.save()
+
+        serializer.save(watchlist=watchlist, reviewer=reviewer)
 
 
 class ReviewList(generics.ListAPIView):
@@ -31,6 +52,7 @@ class ReviewList(generics.ListAPIView):
 class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [IsReviewUserOrReadOnly]
 
 
 # class ReviewDetails(mixins.RetrieveModelMixin, generics.GenericAPIView):
@@ -53,6 +75,7 @@ class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
 
 
 class StreamPlatformAV(APIView):
+    permission_classes = [IsAdminOrReadOnly]
 
     def get(self, request):
         platform = StreamPlatform.objects.all()
@@ -60,7 +83,7 @@ class StreamPlatformAV(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = StreamPlatformSerializer(data=request.data)
+        serializer = StreamPlatformSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -69,6 +92,7 @@ class StreamPlatformAV(APIView):
 
 
 class StreamPlatformDetailAV(APIView):
+    permission_classes = [IsAdminOrReadOnly]
 
     def get(self, request, pk):
         try:
@@ -76,12 +100,13 @@ class StreamPlatformDetailAV(APIView):
         except StreamPlatform.DoesNotExist:
             return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = StreamPlatformSerializer(platform, context={'request': request})
+        serializer = StreamPlatformSerializer(
+            platform, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
         platform = StreamPlatform.objects.get(pk=pk)
-        serializer = StreamPlatformSerializer(platform, data=request.data)
+        serializer = StreamPlatformSerializer(platform, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -95,6 +120,7 @@ class StreamPlatformDetailAV(APIView):
 
 
 class WatchListAV(APIView):
+    permission_classes = [IsAdminOrReadOnly]
     
     def get(self, request):
         movies = WatchList.objects.all()
@@ -111,6 +137,7 @@ class WatchListAV(APIView):
 
 
 class WatchListDetailAV(APIView):
+    permission_classes = [IsAdminOrReadOnly]
 
     def get(self, request, pk):
         try:

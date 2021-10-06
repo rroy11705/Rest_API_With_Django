@@ -6,7 +6,7 @@ from rest_framework import serializers
 # # Model Serializer
 
 class ReviewSerializer(serializers.ModelSerializer):
-    # review_user = serializers.StringRelatedField(read_only=True)
+    reviewer = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Review
@@ -15,7 +15,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class WatchListSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
-    # platform = serializers.CharField(source='platform.name')
+    # platforms = serializers.CharField(source='platforms.name')
 
     class Meta:
         model = WatchList
