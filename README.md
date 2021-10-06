@@ -68,9 +68,9 @@ The watchmate_v2.0.1 is an optimized and clean version of watchmate_v2
 
 ## Pre-requisites
 At least Python 3.6 installed. 
-* [Installation guide on Windows](https://docs.python.org/3.6/using/windows.html)
-* [Installation guide on Unix](https://docs.python.org/3.6/using/unix.html)
-* [Installation guide on Macintosh](https://docs.python.org/3.6/using/mac.html)
+- [Installation guide on Windows](https://docs.python.org/3.6/using/windows.html)
+- [Installation guide on Unix](https://docs.python.org/3.6/using/unix.html)
+- [Installation guide on Macintosh](https://docs.python.org/3.6/using/mac.html)
 
 ---
 
@@ -80,13 +80,13 @@ At least Python 3.6 installed.
     > git clone https://github.com/rroy11705/Rest_API_With_Django
 
 2. It is suggested to use a virtual environment.
-    * To install virtualenv
-        > pip install virtualenv
-    * To create a virtualenv
-        > virtualenv env_name
-    * To activate virtualenv
-        > source env_name/bin/activate (on linux or mac)
-        > env_name\Scripts\activate (on windows)
+- To install virtualenv
+    > pip install virtualenv
+- To create a virtualenv
+    > virtualenv env_name
+- To activate virtualenv
+    > source env_name/bin/activate (on linux or mac)
+    > env_name\Scripts\activate (on windows)
 
 3. Go to console, open cmd with the folder path and install dependencies from _requirements.txt_ file using:
     > pip install -r requirements.txt
