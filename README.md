@@ -3,7 +3,8 @@
 ## Description
 
 This is a Restful API using Django and MySQL.
-The purpose of the API is to let the users discover TV shows and movies and serve ratings from other users and the streaming platform of the TV show or movie.
+The purpose of the API is to let the users discover TV shows and movies and its streaming platform and serve ratings from other users and let users add rating. This API contains Token base authentication and user registration and login facilities. Some URLs are restricted to the admins and some to authenticated users. 
+
 The watchmate_v1 is not a Restful api. This is just for learning normal Django.
 The watchmate_v2 is a Restful api using Django which contains various practices of REST_FRAMEWORK.
 
@@ -64,43 +65,13 @@ At least Python 3.6 installed.
 
 ---
 
+
+## Database Architecture 
+![Database Architecture](./assets/relation.png)
+
 ## Endpoints for watchmate_v2
 
-#### 1. /watch/list \[allowed methods = GET, POST\]
-The GET method is to fetch all list of all TV shows and Movies available.
-The POST method id to add a single watchable TV show or Movie to the database.
-
-
-#### 2. /watch/list/show_id(integer)/ \[allowed methods  = GET, PUT, DELETE\]
-The GET method is to fetch the data of the TV shows or Movies with a show_id, which is of type integer.
-The PUP method is to update the data of the TV shows or Movies with a show_id.
-The DELETE method is to delete the TV shows or Movies record with a show_id.
-
-
-#### 3. /watch/stream/ \[allowed methods = GET, POST\]
-The GET method is to fetch all list of Streaming Platforms available.
-The POST method id to add a single Streaming Platform to the database.
-
-
-#### 4. /watch/stream/stream_id(integer)/ \[allowed methods  = GET, PUT, DELETE\]
-The GET method is to fetch the data of the Streaming Platform with id = stream_id, which is of type integer.
-The PUP method is to update the data of the Streaming Platform with id = stream_id.
-The DELETE method is to delete the Streaming Platform record with id = stream_id.
-
-
-#### 5. /watch/list/show_id/reviews/ \[allowed methods = GET\]
-The GET method is to fetch all reviews of the TV shows or Movie with id = show_id.
-
-
-#### 6. /watch/review/review_id/ \[allowed methods = GET, PUT, PATCH, DELETE\]
-The GET method is to fetch the review with id = review_id.
-The PUT method is to update the entire review with id = review_id.
-The PATCH method is to update the review partially with id = review_id.
-The DELETE method is to delete the review with id = review_id.
-
-
-#### 7. list/show_id/review-create/ \[allowed methods = POST\]
-The POST method is to create a review for the TV shows or Movie with id = show_id.
+The Endpoints documentation is published in [postman](https://documenter.getpostman.com/view/7163762/UUy66k4d) and can be accessed publicly.
 
 
 ---
