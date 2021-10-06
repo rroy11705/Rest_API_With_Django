@@ -1,0 +1,6 @@
+DB_NAME = databasename
+DB_HOST= hostname (localhost: 127.0.0.1)
+DB_PORT = 3306
+DB_USER = database_user
+DB_USER_PASSWORD = database_user_password
+DB_DJANGO_SECRET_KEY = (random secret key)
