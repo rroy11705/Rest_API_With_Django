@@ -81,13 +81,6 @@ class WatchListAV(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAdminOrReadOnly]
     pagination_class = pagination.WatchListLOPagination
 
-    # filter_backends = [DjangoFilterBackend]
-    # filterset_fields = ['platforms']
-    # filter_class = custom_filters.PlatformFilter
-
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'storyline']
-
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['title']
 
