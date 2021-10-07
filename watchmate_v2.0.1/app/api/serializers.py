@@ -1,5 +1,6 @@
 from app.models import WatchList, StreamPlatform, Review
 from rest_framework import serializers
+from django.db.models import Avg
 from app.models import WatchList
 
 
@@ -30,12 +31,20 @@ class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class WatchListSerializer(serializers.ModelSerializer):
-    platforms = StreamPlatformSerializer(many=True)
+    platforms = StreamPlatformSerializer(many=True, write_only=True)
+    avg_rating = serializers.SerializerMethodField()
+    rating_count = serializers.SerializerMethodField()
     
     class Meta:
         model = WatchList
         fields = "__all__"
-        depth = 1
+
+    def get_avg_rating(self, obj):
+        res =  Review.objects.filter(watchlist__id=obj.id, active=True).aggregate(Avg('rating'))
+        return res["rating__avg"] or 0
+
+    def get_rating_count(self, obj):
+        return Review.objects.filter(watchlist__id=obj.id, active=True).count()
 
     def create(self, validated_data):
         platforms = validated_data.pop('platforms')

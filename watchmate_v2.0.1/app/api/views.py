@@ -1,12 +1,11 @@
 from app.models import Review, StreamPlatform, WatchList
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, generics, status
+from rest_framework import filters, generics
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, ScopedRateThrottle
 
-from app.api import pagination, permissions, serializers, throttling
+from app.api import pagination, permissions, serializers, throttling, custom_filters
 
 
 class UserReview(generics.ListAPIView):
@@ -36,13 +35,6 @@ class ReviewCreate(generics.CreateAPIView):
 
         if review_queryset.exists():
             raise ValidationError("You have already reviewed the movie!")
-
-        if watchlist.number_rating == 0:
-            watchlist.avg_rating = serializer.validated_data['rating']
-
-        else:
-            watchlist.avg_rating = (
-                watchlist.avg_rating + serializer.validated_data['rating'])/2
 
         watchlist.number_rating = watchlist.number_rating + 1
         watchlist.save()
@@ -89,14 +81,15 @@ class WatchListAV(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAdminOrReadOnly]
     pagination_class = pagination.WatchListLOPagination
 
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['platforms__name']
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['platforms']
+    # filter_class = custom_filters.PlatformFilter
 
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', '=platforms__name', 'storyline']
+    search_fields = ['title', 'storyline']
 
     filter_backends = [filters.OrderingFilter]
-    ordering_fields = ['title', 'avg_rating']
+    ordering_fields = ['title']
 
 
 class WatchListDetailAV(generics.RetrieveUpdateDestroyAPIView):
