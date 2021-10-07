@@ -15,7 +15,7 @@ class StreamPlatform(models.Model):
 class WatchList(models.Model):
     title = models.CharField(max_length=256)
     storyline = models.TextField(max_length=2048)
-    platforms = models.ForeignKey(StreamPlatform, on_delete=models.CASCADE, related_name="watchlist", null=True, blank=True)
+    platforms = models.ManyToManyField(StreamPlatform, related_name="watchlist")
     avg_rating = models.FloatField(default=0)
     number_rating = models.IntegerField(default=0)
     active = models.BooleanField(default=True)

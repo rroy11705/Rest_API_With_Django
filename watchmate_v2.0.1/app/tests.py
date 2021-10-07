@@ -17,8 +17,14 @@ class StreamPlatformTestCase(APITestCase):
         self.token = Token.objects.get(user__username=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
-        self.stream = models.StreamPlatform.objects.create(name="Netflix",
-                                                           about="#1 Platform", website="https://www.netflix.com")
+        self.stream = models.StreamPlatform(name="Netflix",
+                                     about="#1 Platform", 
+                                     website="https://www.netflix.com")
+        self.stream.save()
+        self.watchlist = models.WatchList.objects.create(title="Example Movie",
+                                                         storyline="Example Movie", 
+                                                         active=True)
+        self.watchlist.platforms.add(self.stream)
 
     def test_streamplatform_create(self):
         data = {
@@ -47,13 +53,15 @@ class WatchListTestCase(APITestCase):
         self.token = Token.objects.get(user__username=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
-        self.stream = models.StreamPlatform.objects.create(name="Netflix",
-                                                           about="#1 Platform", 
-                                                           website="https://www.netflix.com")
-        self.watchlist = models.WatchList.objects.create(platforms=self.stream, 
-                                                         title="Example Movie",
+        self.stream = models.StreamPlatform(name="Netflix",
+                                     about="#1 Platform", 
+                                     website="https://www.netflix.com")
+        self.stream.save()
+        self.watchlist = models.WatchList.objects.create(title="Example Movie",
                                                          storyline="Example Movie", 
                                                          active=True)
+        self.watchlist.platforms.add(self.stream)  
+
 
     def test_watchlist_create(self):
         data = {
@@ -84,12 +92,17 @@ class ReviewTestCase(APITestCase):
         self.token = Token.objects.get(user__username=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
-        self.stream = models.StreamPlatform.objects.create(name="Netflix",
-                                                           about="#1 Platform", website="https://www.netflix.com")
-        self.watchlist = models.WatchList.objects.create(platforms=self.stream, title="Example Movie",
-                                                         storyline="Example Movie", active=True)
-        self.watchlist2 = models.WatchList.objects.create(platforms=self.stream, title="Example Movie",
-                                                          storyline="Example Movie", active=True)
+        self.stream = models.StreamPlatform(name="Netflix",
+                                     about="#1 Platform", 
+                                     website="https://www.netflix.com")
+        self.stream.save()
+        self.watchlist = models.WatchList.objects.create(title="Example Movie",
+                                                         storyline="Example Movie", 
+                                                         active=True)
+        self.watchlist.platforms.add(self.stream)  
+        self.watchlist2 = models.WatchList.objects.create(title="Example Movie",
+                                                          storyline="Example Movie", active=True) 
+        self.watchlist.platforms.add(self.stream)                                              
         self.review = models.Review.objects.create(reviewer=self.user, rating=5, description="Great Movie",
                                                    watchlist=self.watchlist2, active=True)
 
